@@ -1,0 +1,432 @@
+/* Base styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+.ringscros{
+    width: 30px;
+    height: 30px;
+    vertical-align: bottom;
+}.head-ring-score{
+    width: auto;
+    position: relative;
+    top: 0.15em;
+    height: 1em;
+}
+#gameContainer {
+    position: relative;
+    width: 100vw !important; /* Full width */
+    height: 100vh !important; /* Full height */
+    background-image: url('tests.jpg');
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Scale the image to cover the entire element */
+    background-position: center; /* Center the image */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Shadow for depth */
+    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+}
+#cloud {
+    position: absolute;
+    top: 10%;
+    width: 100px;
+    height: 60px;
+    background: url('img/spaceship.png') no-repeat center center;
+    background-size: contain;
+    animation: moveClouds 30s linear infinite, rotateCloud 10s linear infinite;
+}
+#cloud2{
+    position: absolute;
+    top: 10%;
+    width: 80px;
+    height: 60px;
+    background: url('img/spaceship2.png') no-repeat center center;
+    background-size: contain;
+}
+#cloud3 {
+    position: absolute;
+    top: 15%; /* Adjust the vertical position */
+    width: 120px; /* Size of the cloud */
+    height: 80px;
+    background: url('img/spaceship3.png') no-repeat center center; /* Path to the cloud image */
+    background-size: contain;
+    animation: moveClouds3 35s linear infinite; /* Animation with a different speed */
+}
+
+@keyframes moveClouds3 {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: 35%;
+    }
+}
+
+#cloud2 {
+    top: 20%;
+    animation: moveClouds 40s linear infinite;
+}
+/* @keyframes rotateCloud {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+} */
+
+@keyframes moveClouds {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -10%;
+    }
+}
+/* Sun styling */
+#sun {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    width: 15vw; /* Responsive width */
+    height: 15vw; /* Responsive height */
+    max-width: 100px; /* Maximum size */
+    max-height: 100px; /* Maximum size */
+    background: radial-gradient(circle, #FFD700 60%, transparent 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 
+                0 0 15px rgba(255, 215, 0, 0.5),
+                0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Dino styling */
+#dino {
+    position: absolute;
+    bottom: 0; /* Adjust position from bottom */
+    left: 5%;
+    width: 30vw;
+    height: 37vw;
+    max-width: 63px;
+    max-height: 133px;
+    background-image: url('img/finalhero.png'); /* Path to your dino image */
+    background-size: cover;
+    transform: scaleX(1);
+}
+.logo-cont{
+    position: relative;
+}
+.logo-cont img {
+    width: 18%;
+    position: absolute;
+    /* left: 0%; */
+    right: 2%;
+}
+/* Horizontal mirror effect */
+.mirror-horizontal {
+    transform: scaleX(-1);
+}
+
+/* Vertical mirror effect */
+.mirror-vertical {
+    transform: scaleY(-1);
+}
+
+/* Combined horizontal and vertical mirror effect */
+.mirror-horizontal-vertical {
+    transform: scale(-1, -1);
+}
+/* Obstacle styling */
+#obstacle {
+    position: absolute;
+    bottom: 3px;
+    right: 5%;
+    width: 7vw;
+    height: 13vw;
+    max-width: 60px;
+    max-height: 88px;
+    background-image: url('img/obstacle1.png'); /* Path to your obstacle image */
+    background-size: cover;
+}
+
+/* #obstacle2 {
+    position: absolute;
+    bottom: 0;
+    width: 10vw; 
+    height: 10vw; 
+    max-width: 80px; 
+    max-height: 80px;
+    background-image: url('s1.png'); 
+    background-size: cover;
+} */
+
+/* Hidden class */
+.hidden {
+    display: none;
+}
+
+/* Score styling */
+#score {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 2.5vw; /* Responsive font size */
+    color: #fff;
+}
+#levelDisplay{
+    position: absolute;
+    top: 14%;
+    left: 5%;
+    font-size: 2vw; /* Responsive font size */
+    color: #fff;
+}
+
+/* Game over box styling */
+#gameOverBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#gameOverBox.hidden {
+    display: none;
+}
+
+#gameOverMessage {
+    margin: 0;
+    font-size: 1.5rem; /* Responsive font size */
+}
+.ring-score{
+    width: 23px;
+    position: relative; top: 0.15em; height: 1em;
+}
+/* Play Again button styling */
+#playAgainButton {
+    padding: 10px 20px;
+    font-size: 1rem; /* Responsive font size */
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Ensure it is displayed */
+    margin: 20px auto; /* Center the button horizontally */
+    touch-action: manipulation; /* Ensure proper touch handling */
+}
+
+#playAgainButton:hover {
+    background: #45a049;
+}
+
+/* Text container styling */
+.text-game {
+    width: 90vw; /* Responsive width */
+    max-width: 800px; /* Maximum width */
+    margin: 20px auto 0; /* Center horizontally and add margin on top */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    color: #333; /* Text color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Styling for the heading */
+.text-game h1 {
+    font-size: 2rem; /* Responsive font size */
+    margin-bottom: 10px; /* Space between heading and paragraph */
+    color: #444; /* Slightly darker text color for the heading */
+    text-align: center; /* Center the heading text */
+}
+
+/* Styling for the paragraph */
+.text-game p {
+    font-size: 1rem; /* Responsive font size */
+    line-height: 1.6; /* Line height for readability */
+    text-align: justify; /* Justify text for a cleaner look */
+}
+
+/* Media Queries for different screen sizes */
+
+/* Mobile Devices (Portrait) */
+@media (max-width: 480px) {
+    #congratulatoryMessage{
+        width: 200px;
+    }
+    .ring-score{
+        width: 25px;
+        height: 1.1em;
+    }
+    #gameContainer {
+        width: 100vw !important;   /* Full width for mobile */
+        height:100vh !important; /* Full height for mobile */
+    }
+    .ringscros{
+            width: 15px;
+            height: 15px;
+            vertical-align: bottom;
+    }
+    #levelDisplay{
+        top: 10%;
+        left: 5%;
+        font-size: 3.5vw; /* Responsive font size */
+        color: #fff;
+    }
+    .text-game {
+        width: 95%; /* Increase width for mobile */
+        padding: 15px; /* Reduce padding for smaller screens */
+    }
+    
+    .text-game h1 {
+        font-size: 1.5rem; /* Adjust heading size for mobile */
+    }
+    
+    .text-game p {
+        font-size: 0.9rem; /* Adjust paragraph size for mobile */
+    }
+    #score{
+        font-size: 3.5vw;
+    }
+    #obstacle{
+        width: 11vw;
+        height: 20vw;
+
+    }
+}
+
+/* Tablets and Small Laptops */
+@media (min-width: 481px) and (max-width: 1024px) {
+    
+    .ringscros {
+        width: 22px;
+        height: 22px;
+        vertical-align: bottom;}
+
+    #gameContainer {
+        width: 100vw !important;
+        height: 81vh !important; /* Full height for tablets */
+    }
+    #obstacle{
+        width: 9vw;
+        height: 16vw;
+    }
+    .text-game {
+        width: 90%; /* Adjust width for tablets */
+        padding: 20px; /* Maintain padding for tablets */
+    }
+    
+    .text-game h1 {
+        font-size: 1.75rem; /* Adjust heading size for tablets */
+    }
+    
+    .text-game p {
+        font-size: 1rem; /* Maintain paragraph size for tablets */
+    }
+    #score{
+        font-size: 2.5vw;
+    }
+    #levelDisplay{
+        font-size: 2.5vw; /* Responsive font size */
+        top: 12%;
+    }
+}
+@media (max-width: 560px) and (orientation: landscape){
+    #gameContainer{
+        height:79vh !important
+    }
+
+}
+@media (max-width: 960px) and (orientation: landscape) {
+    #gameContainer {
+        height: 79vh !important; /* Ensure full height */
+        margin-top: 0;
+    }
+    #score{
+        font-size: 2.5vw;
+    }
+    #obstacle{
+        width: 9vw;
+        height: 16vw;
+    }
+    #levelDisplay{
+        font-size: 2.5vw; /* Responsive font size */
+    }
+}
+#mobileMessageBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+.gameoverlogo{
+    width: 25%;
+    max-width: 100px;
+}
+
+#mobileMessageBox.hidden {
+    display: none;
+}
+
+#startGameButton {
+    margin-top: 10px;
+}
+
+#congratulatoryMessage {
+    position: absolute; /* Position it as needed */
+    top: 50%; /* Center it vertically */
+    left: 50%; /* Center it horizontally */
+    transform: translate(-50%, -50%); /* Center it precisely */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: #fff; /* White text */
+    padding: 20px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    z-index: 1000; /* Ensure it appears on top */
+    text-align: center;
+}
+
+#congratulatoryMessage.hidden {
+    display: none; /* Ensure it's hidden when not needed */
+}
+
+#codeMessage {
+    margin-top: 10px;
+    font-weight: bold;
+}
+#cookieimg201 {
+    width: 40px; /* Ensure the size is as desired */
+    height: 30px;
+    vertical-align: middle;
+}
+@media (max-width: 600px) {
+    #cookieimg201 {
+        width: 20px;
+        height: 15px;
+    }
+    #obstacle{
+        width: 11vw;
+        height: 20vw;
+    }
+    .head-ring-score{
+        width: 16px;
+    }
+ 
+}

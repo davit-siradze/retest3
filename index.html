@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dino Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="dino" class="mirror-horizontal"></div>
+        <div id="cloud"></div>
+        <div id="cloud2"></div>
+        <div id="cloud3"></div>
+        <div id="obstacle"></div>
+        <div id="obstacle2" class="hidden"></div> <!-- Added second obstacle -->
+        <div id="score">Okin's : 0 <img class="head-ring-score" src="img/ring.png" alt="ringscore"> </div>
+        <div id="levelDisplay">დონე: 0</div>
+        <div class="logo-cont">
+            <img src="img/logo.png" alt="contlogo">
+        </div>
+        <div id="congratulatoryMessage" class="hidden">
+            <img class="still gameoverlogo" src="img/logo.png" alt="logoheader">
+            <p id="codeMessageCongratulatory" style="    margin: 0;"></p>
+            <img src="img/gift.png" style="width: 35%;" alt="gift">
+            <p style="    margin: 0;">გილოცავთ! თქვენ მოიგეთ Orkin's Box!</p>
+        </div>
+        
+
+        <div id="gameOverBox" class="hidden">
+            <img class="gameoverlogo" src="img/logo.png" alt="logoheader">
+            <p id="gameOverMessage">თამაში დასრულდა <span id="finalScore">0</span></p>
+            <p id="codeMessageGameOver"></p> 
+            <button id="playAgainButton">ითამაშე თავიდან</button>
+        </div>
+
+    </div>
+    <div id="mobileMessageBox" class="hidden">
+        <img src="img/logo.png" alt="logo" class="logoims" width="100%" style="    max-width: 90px; margin-bottom:20px;">
+        <img src="2313685.png" alt="" style="width: 40px;"> 
+        <p>გთხოვთ ამოატრიალოთ მობილური, რადგან უკეთ შეძლოთ თამაში!</p>
+        <button id="startGameButton">დაიწყე თამაში</button>
+    </div>
+    
+
+ 
+    
+    <script src="game.js"></script>
+</body>
+</html>
