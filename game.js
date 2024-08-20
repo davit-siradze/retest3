@@ -1,17 +1,23 @@
-let dino = document.getElementById('dino');
-let obstacle = document.getElementById('obstacle');
-let scoreDisplay = document.getElementById('score');
-let levelDisplay = document.getElementById('levelDisplay');
-let gameContainer = document.getElementById('gameContainer');
-let gameOverBox = document.getElementById('gameOverBox');
-let finalScore = document.getElementById('finalScore');
-let playAgainButton = document.getElementById('playAgainButton');
-let mobileMessageBox = document.getElementById('mobileMessageBox');
-let startGameButton = document.getElementById('startGameButton');
-let codeMessageGameOver = document.getElementById('codeMessageGameOver');
-let congratulatoryMessageBox = document.getElementById('congratulatoryMessage');
-let codeMessageCongratulatory = document.getElementById('codeMessageCongratulatory');
+document.addEventListener('DOMContentLoaded', function () {
+    let dino = document.getElementById('dino');
+    let obstacle = document.getElementById('obstacle');
+    let scoreDisplay = document.getElementById('score');
+    let levelDisplay = document.getElementById('levelDisplay');
+    let gameContainer = document.getElementById('gameContainer');
+    let gameOverBox = document.getElementById('gameOverBox');
+    let finalScore = document.getElementById('finalScore');
+    let playAgainButton = document.getElementById('playAgainButton');
+    let mobileMessageBox = document.getElementById('mobileMessageBox');
+    let startGameButton = document.getElementById('startGameButton');
+    let codeMessageGameOver = document.getElementById('codeMessageGameOver');
+    let congratulatoryMessageBox = document.getElementById('congratulatoryMessage');
+    let codeMessageCongratulatory = document.getElementById('codeMessageCongratulatory');
 
+    // Ensure fpsDisplay exists
+    let fpsDisplay = document.getElementById('fpsDisplay');
+    if (!fpsDisplay) {
+        console.error("FPS Display element not found");
+    }
 // Define difficulty levels (10 levels)
 const DIFFICULTY_LEVELS = [
     { speed: 5, jumpVelocity: 16, spawnChance: 0.6, obstacleSpacing: 40 },
@@ -252,24 +258,37 @@ function updateGame() {
     }
 }
 
-function gameLoop() {
-    if (!gameOver) {
-        updateGame();
+  function gameLoop() {
+        if (!gameOver) {
+            updateGame();
 
-        frameCount++;
-        let now = performance.now();
-        let elapsed = now - lastFrameTime;
+            frameCount++;
+            let now = performance.now();
+            let elapsed = now - lastFrameTime;
 
-        if (elapsed >= 1000) {
-            let fps = (frameCount / elapsed) * 1000;
-            fpsDisplay.innerText = `FPS: ${Math.round(fps)}`;
-            frameCount = 0;
-            lastFrameTime = now;
+            if (elapsed >= 1000) {
+                let fps = (frameCount / elapsed) * 1000;
+                if (fpsDisplay) { // Check if fpsDisplay is not null
+                    fpsDisplay.innerText = `FPS: ${Math.round(fps)}`;
+                }
+                frameCount = 0;
+                lastFrameTime = now;
+            }
+
+            requestAnimationFrame(gameLoop);
         }
-
-        requestAnimationFrame(gameLoop);
     }
-}
+
+    startGameButton.addEventListener('click', () => {
+        enterFullscreen();
+        startGame();
+    });
+
+    function startGame() {
+        mobileMessageBox.classList.add('hidden');
+        gameContainer.classList.remove('hidden');
+        gameLoop();
+    }
 
 function resetGame() {
     isJumping = false;
@@ -288,3 +307,6 @@ function resetGame() {
     dino.style.bottom = '0px';
     gameLoop();
 }
+});
+
+
