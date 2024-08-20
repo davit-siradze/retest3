@@ -1,13 +1,3 @@
-:root {
-    --vh: 100vh;
-}
-/* Adjust --vh value for Safari */
-@supports (-webkit-touch-callout: none) {
-    :root {
-        --vh: calc(100vh - env(safe-area-inset-top));
-    }
-}
-
 /* Base styles */
 html, body {
     margin: 0;
@@ -325,7 +315,7 @@ html, body {
 
     #gameContainer {
         width: 100vw !important;
-        height: 81vh !important; /* Full height for tablets */
+        height: 86vh !important; /* Full height for tablets */
     }
     #obstacle{
         width: 9vw;
@@ -439,41 +429,4 @@ html, body {
         width: 16px;
     }
  
-}
-/* iPhone SE and smaller devices in portrait mode */
-@media only screen and (max-width: 320px) {
-    #gameContainer {
-        height: 90vh  !important;
-    }
-    /* Adjust other elements as needed */
-}
-
-/* iPhone 12/13/14 Pro, iPhone X, XS, and similar devices in portrait mode */
-@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: portrait) {
-    #gameContainer {
-        height: calc(100vh - 50px) !important; /* Compensate for Safari's UI */
-    }
-    /* Add further styles for responsive adjustments */
-}
-
-/* iPhone 12/13/14 Pro Max and similar devices in landscape mode */
-@media only screen and (min-width: 812px) and (max-width: 1024px) and (orientation: landscape) {
-    #gameContainer {
-        height: calc(100vh - 50px) !important; /* Adjust height for landscape orientation */
-    }
-    /* Add further styles for responsive adjustments */
-}
-
-/* iPad and iPad Pro in portrait mode */
-@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-    #gameContainer {
-        height: 100vh !important; /* Ensure full height */
-    }
-}
-
-/* iPad and iPad Pro in landscape mode */
-@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
-    #gameContainer {
-        height: 100vh !important; /* Ensure full height */
-    }
 }
