@@ -443,7 +443,7 @@ html, body {
 /* iPhone SE and smaller devices in portrait mode */
 @media only screen and (max-width: 320px) {
     #gameContainer {
-        height: 100vh;
+        height: 90vh  !important;
     }
     /* Adjust other elements as needed */
 }
@@ -451,7 +451,7 @@ html, body {
 /* iPhone 12/13/14 Pro, iPhone X, XS, and similar devices in portrait mode */
 @media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: portrait) {
     #gameContainer {
-        height: calc(100vh - 50px); /* Compensate for Safari's UI */
+        height: calc(100vh - 50px) !important; /* Compensate for Safari's UI */
     }
     /* Add further styles for responsive adjustments */
 }
@@ -459,7 +459,7 @@ html, body {
 /* iPhone 12/13/14 Pro Max and similar devices in landscape mode */
 @media only screen and (min-width: 812px) and (max-width: 1024px) and (orientation: landscape) {
     #gameContainer {
-        height: calc(100vh - 50px); /* Adjust height for landscape orientation */
+        height: calc(100vh - 50px) !important; /* Adjust height for landscape orientation */
     }
     /* Add further styles for responsive adjustments */
 }
@@ -467,13 +467,13 @@ html, body {
 /* iPad and iPad Pro in portrait mode */
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
     #gameContainer {
-        height: 100vh; /* Ensure full height */
+        height: 100vh !important; /* Ensure full height */
     }
 }
 
 /* iPad and iPad Pro in landscape mode */
 @media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
     #gameContainer {
-        height: 100vh; /* Ensure full height */
+        height: 100vh !important; /* Ensure full height */
     }
 }
