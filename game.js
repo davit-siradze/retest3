@@ -1,16 +1,16 @@
 let dino = document.getElementById('dino');
 let obstacle = document.getElementById('obstacle');
 let scoreDisplay = document.getElementById('score');
-let levelDisplay = document.getElementById('levelDisplay'); // New element for displaying level
+let levelDisplay = document.getElementById('levelDisplay');
 let gameContainer = document.getElementById('gameContainer');
 let gameOverBox = document.getElementById('gameOverBox');
 let finalScore = document.getElementById('finalScore');
 let playAgainButton = document.getElementById('playAgainButton');
 let mobileMessageBox = document.getElementById('mobileMessageBox');
 let startGameButton = document.getElementById('startGameButton');
-let codeMessageGameOver = document.getElementById('codeMessageGameOver'); // Updated to match HTML ID
+let codeMessageGameOver = document.getElementById('codeMessageGameOver');
 let congratulatoryMessageBox = document.getElementById('congratulatoryMessage');
-let codeMessageCongratulatory = document.getElementById('codeMessageCongratulatory'); // Updated to match HTML ID
+let codeMessageCongratulatory = document.getElementById('codeMessageCongratulatory');
 
 // Define difficulty levels (10 levels)
 const DIFFICULTY_LEVELS = [
@@ -38,75 +38,75 @@ const OBSTACLE_IMAGES = [
 let isJumping = false;
 let isFalling = false;
 let score = 0;
-let obstacleSpeed = DIFFICULTY_LEVELS[0].speed; // Initial speed of the obstacle
-let gameOver = false; // Flag to track game state
+let obstacleSpeed = DIFFICULTY_LEVELS[0].speed;
+let gameOver = false;
 
-const GRAVITY = -0.6; // Gravity effect
-let JUMP_VELOCITY = DIFFICULTY_LEVELS[0].jumpVelocity; // Initial jump velocity
-let obstacleSpacing = DIFFICULTY_LEVELS[0].obstacleSpacing; // Initial obstacle spacing
+const GRAVITY = -0.489;
+let JUMP_VELOCITY = DIFFICULTY_LEVELS[0].jumpVelocity;
+let obstacleSpacing = DIFFICULTY_LEVELS[0].obstacleSpacing;
 
-let dinoBottom = 0; // Dino's bottom position in px
-let dinoVelocity = 0; // Dino's vertical velocity
+let dinoBottom = 0;
+let dinoVelocity = 0;
 
-let difficultyIncreaseInterval = 2000; // Time interval for increasing difficulty (ms)
-let difficultyTimer = 0; // Timer to track time elapsed for difficulty increase
+let difficultyIncreaseInterval = 2000;
+let difficultyTimer = 0;
 
-let currentLevel = 0; // Start at level 0
-let levelUpScore = 100; // Score threshold to move to the next level
+let currentLevel = 0;
+let levelUpScore = 100;
 
-let lastObstacleImage = null; // To track the last image shown
+let lastObstacleImage = null;
+
+let fpsDisplay = document.getElementById('fpsDisplay');
+let lastFrameTime = performance.now();
+let frameCount = 0;
 
 // Function to detect mobile devices
 function isMobile() {
     return /Mobi|Android/i.test(navigator.userAgent);
 }
+
+// Resize the game container for mobile and desktop
 function resizeGameContainer() {
     let viewportWidth = window.innerWidth;
     let viewportHeight = window.innerHeight;
     
-    // Set the container dimensions to fit better on mobile devices
-    let containerWidth = viewportWidth * 0.9; // 90% of viewport width
-    let containerHeight = Math.min(viewportHeight * 0.6, 400); // Adjusted to 60% of viewport height or max 400px
+    let containerWidth = viewportWidth * 0.9;
+    let containerHeight = Math.min(viewportHeight * 0.6, 400);
 
     gameContainer.style.width = containerWidth + 'px';
     gameContainer.style.height = containerHeight + 'px';
-    
-    // Center the game container
+
     gameContainer.style.position = 'absolute';
     gameContainer.style.top = '50%';
     gameContainer.style.left = '50%';
     gameContainer.style.transform = 'translate(-50%, -50%)';
 
-    // Adjust the position of the Dino within the game container
     dino.style.bottom = '0px';
     dino.style.left = '10%';
 
-    // Adjust cloud sizes based on container size
-    let cloudElements = document.querySelectorAll('#cloud, #cloud2,#cloud3');
+    let cloudElements = document.querySelectorAll('#cloud, #cloud2, #cloud3');
     cloudElements.forEach(cloud => {
-        cloud.style.width = containerWidth * 0.3 + 'px'; // 30% of container width
-        cloud.style.height = containerHeight * 0.3 + 'px'; // 30% of container height
+        cloud.style.width = containerWidth * 0.3 + 'px';
+        cloud.style.height = containerHeight * 0.3 + 'px';
     });
 }
 
-// Add the resize event listener and call it initially
 window.addEventListener('resize', resizeGameContainer);
 resizeGameContainer();
-
 
 function enterFullscreen() {
     if (gameContainer.requestFullscreen) {
         gameContainer.requestFullscreen();
-    } else if (gameContainer.mozRequestFullScreen) { /* Firefox */
+    } else if (gameContainer.mozRequestFullScreen) {
         gameContainer.mozRequestFullScreen();
-    } else if (gameContainer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    } else if (gameContainer.webkitRequestFullscreen) {
         gameContainer.webkitRequestFullscreen();
-    } else if (gameContainer.msRequestFullscreen) { /* IE/Edge */
+    } else if (gameContainer.msRequestFullscreen) {
         gameContainer.msRequestFullscreen();
     }
 }
 
-// Call this function when you want to enter fullscreen mode, e.g., on game start
+// Start game button event listener
 startGameButton.addEventListener('click', () => {
     enterFullscreen();
     startGame();
@@ -114,36 +114,36 @@ startGameButton.addEventListener('click', () => {
 
 // Function to start the game
 function startGame() {
-    mobileMessageBox.classList.add('hidden'); // Hide the message box
-    gameContainer.classList.remove('hidden'); // Show the game container
-    gameLoop(); // Start the game loop
+    mobileMessageBox.classList.add('hidden');
+    gameContainer.classList.remove('hidden');
+    gameLoop();
 }
 
 // Show message and start button for mobile users
 if (isMobile()) {
-    gameContainer.classList.add('hidden'); // Hide game container initially
-    mobileMessageBox.classList.remove('hidden'); // Show the mobile message box
+    gameContainer.classList.add('hidden');
+    mobileMessageBox.classList.remove('hidden');
 
     startGameButton.addEventListener('click', () => {
         startGame();
     });
 
     startGameButton.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevent default touch behavior
+        e.preventDefault();
         startGame();
-    }, { passive: false }); // Ensure preventDefault works
+    }, { passive: false });
 }
 
 // Function to handle jumping
 function jump() {
     if (!isJumping && !gameOver) {
         isJumping = true;
-        dinoVelocity = JUMP_VELOCITY; // Set initial jump velocity
-        dino.style.transition = 'none'; // Ensure no transition interference
+        dinoVelocity = JUMP_VELOCITY;
+        dino.style.transition = 'none';
     }
 }
 
-// Listen for keyboard events for desktop
+// Listen for keyboard events
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         jump();
@@ -151,50 +151,25 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent default touch behavior
+    e.preventDefault();
     jump();
-}, { passive: false }); // Ensure preventDefault works
+}, { passive: false });
 
 document.addEventListener('touchend', (e) => {
     e.preventDefault();
 }, { passive: false });
-// Play again button event listener
+
 playAgainButton.addEventListener('click', () => {
     resetGame();
-    gameOverBox.style.display = 'none'; // Hide game over box
+    gameOverBox.style.display = 'none';
 });
 
-// Ensure touch events are handled for mobile
 playAgainButton.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent default touch behavior
+    e.preventDefault();
     resetGame();
-    gameOverBox.style.display = 'none'; // Hide game over box
-}, { passive: false }); // Ensure preventDefault works
+    gameOverBox.style.display = 'none';
+}, { passive: false });
 
-// Resize gameContainer based on window size
-function resizeGameContainer() {
-    let viewportWidth = window.innerWidth;
-    let viewportHeight = window.innerHeight;
-    let containerWidth = viewportWidth * 0.9; // 90% of viewport width
-    let containerHeight = viewportHeight * 0.6; // 60% of viewport height
-    
-    gameContainer.style.width = containerWidth + 'px';
-    gameContainer.style.height = containerHeight + 'px';
-    
-    // Adjust cloud sizes based on container size
-    let cloudElements = document.querySelectorAll('#cloud, #cloud2');
-    cloudElements.forEach(cloud => {
-        cloud.style.width = containerWidth * 0.3 + 'px'; // 10% of container width
-        cloud.style.height = containerHeight * 0.3 + 'px'; // 10% of container height
-    });
-}
-
-window.addEventListener('resize', resizeGameContainer);
-
-// Initial resize
-resizeGameContainer();
-
-// Function to generate a 7-digit code
 function generateCode() {
     return Math.floor(1000000 + Math.random() * 9000000);
 }
@@ -204,23 +179,21 @@ function updateDifficulty() {
         currentLevel++;
         obstacleSpeed = DIFFICULTY_LEVELS[currentLevel].speed;
         JUMP_VELOCITY = DIFFICULTY_LEVELS[currentLevel].jumpVelocity;
-        difficultyIncreaseInterval = 2000 / (currentLevel + 1); // Increase difficulty more often
-        obstacleSpacing = DIFFICULTY_LEVELS[currentLevel].obstacleSpacing; // Update spacing
-        levelDisplay.innerText = `დონე: ${currentLevel}`; // Update level display
+        difficultyIncreaseInterval = 2000 / (currentLevel + 1);
+        obstacleSpacing = DIFFICULTY_LEVELS[currentLevel].obstacleSpacing;
+        levelDisplay.innerText = `Level: ${currentLevel}`;
         console.log(`Level Up! Current Level: ${currentLevel}`);
 
-        // Check if player has reached level 2
         if (currentLevel === 1) {
-            console.log('Level 2 reached! Showing congratulatory message.');
-            congratulatoryMessageBox.classList.remove('hidden'); // Show the congratulatory message
-            codeMessageCongratulatory.innerText = `Your code: ${generateCode()}`; // Display the code in the congratulatory message
-            console.log('Congratulations! You won a pack of biscuits!');
-
-            // End the game
-            gameOver = true; // Stop the game loop
+            congratulatoryMessageBox.classList.remove('hidden');
+            codeMessageCongratulatory.innerText = `Your code: ${generateCode()}`;
+            gameOver = true;
         }
     }
 }
+
+let collisionCheckInterval = 100;
+let lastCollisionCheck = performance.now();
 
 function updateGame() {
     if (gameOver) return;
@@ -229,12 +202,11 @@ function updateGame() {
     let dinoRect = dino.getBoundingClientRect();
     let obstacleRect = obstacle.getBoundingClientRect();
 
-    // Update dino's vertical position
     if (isJumping || isFalling) {
-        dinoVelocity += GRAVITY; // Apply gravity
-        dinoBottom += dinoVelocity; // Update vertical position
+        dinoVelocity += GRAVITY;
+        dinoBottom += dinoVelocity;
 
-        if (dinoBottom <= 0) { // Ensure dino stays within the bottom boundary
+        if (dinoBottom <= 0) {
             dinoBottom = 0;
             isJumping = false;
             isFalling = false;
@@ -246,19 +218,16 @@ function updateGame() {
         dino.style.bottom = dinoBottom + 'px';
     }
 
-    // Obstacle movement and reset logic
     let obstacleRight = parseInt(getComputedStyle(obstacle).right);
-    obstacle.style.right = (obstacleRight + obstacleSpeed) + 'px';
+    obstacle.style.transform = `translateX(${obstacleRight + obstacleSpeed}px)`;
 
     if (obstacleRight > containerRect.width) {
-        obstacle.style.right = -obstacleSpacing + 'px';
+        obstacle.style.transform = `translateX(-${obstacleSpacing}px)`;
         score += 10;
-        scoreDisplay.innerHTML = `Okin's : ${score} <img class="head-ring-score" src="img/ring.png" alt="ringscore"> `;
+        scoreDisplay.innerHTML = `Okin's: ${score} <img class="head-ring-score" src="img/ring.png" alt="ringscore">`;
 
-        // Update difficulty
         updateDifficulty();
 
-        // Update obstacle image
         let newImage;
         do {
             newImage = OBSTACLE_IMAGES[Math.floor(Math.random() * OBSTACLE_IMAGES.length)];
@@ -268,51 +237,54 @@ function updateGame() {
         obstacle.style.backgroundImage = `url('${lastObstacleImage}')`;
     }
 
-    // Collision detection
-    if (dinoRect.left < obstacleRect.right &&
-        dinoRect.right > obstacleRect.left &&
-        dinoRect.bottom > obstacleRect.top) {
-        gameOver = true;
-        finalScore.innerHTML = `Okin's <img class="ring-score" src="img/ring.png" alt="ringscore"> : ${score}`;
-        codeMessageGameOver.innerText = `თქვენი კოდი: ${generateCode()}`;
-        gameOverBox.style.display = 'block';
-    }
+    let now = performance.now();
+    if (now - lastCollisionCheck > collisionCheckInterval) {
+        lastCollisionCheck = now;
 
-    difficultyTimer += 20;
-    if (difficultyTimer >= difficultyIncreaseInterval) {
-        difficultyTimer = 0;
+        if (dinoRect.left < obstacleRect.right &&
+            dinoRect.right > obstacleRect.left &&
+            dinoRect.bottom > obstacleRect.top) {
+            gameOver = true;
+            finalScore.innerHTML = `Okin's <img class="ring-score" src="img/ring.png" alt="ringscore"> : ${score}`;
+            codeMessageGameOver.innerText = `Your code: ${generateCode()}`;
+            gameOverBox.style.display = 'block';
+        }
     }
 }
 
+function gameLoop() {
+    if (!gameOver) {
+        updateGame();
 
-// Function to reset the game
+        frameCount++;
+        let now = performance.now();
+        let elapsed = now - lastFrameTime;
+
+        if (elapsed >= 1000) {
+            let fps = (frameCount / elapsed) * 1000;
+            fpsDisplay.innerText = `FPS: ${Math.round(fps)}`;
+            frameCount = 0;
+            lastFrameTime = now;
+        }
+
+        requestAnimationFrame(gameLoop);
+    }
+}
+
 function resetGame() {
-    gameOver = false;
+    isJumping = false;
+    isFalling = false;
     score = 0;
-    scoreDisplay.innerHTML = `Okin's <img class="head-ring-score" src="img/ring.png" alt="ringscore">: 0`; // Reset score display
-    obstacle.style.right = -obstacleSpacing + 'px'; // Reset obstacle position
-    lastObstacleImage = null; // Reset last image to ensure a new one is picked
-    dinoBottom = 0;
-    dinoVelocity = 0;
-    dino.style.bottom = '0px';
-
-    // Reset to initial level settings
     currentLevel = 0;
     obstacleSpeed = DIFFICULTY_LEVELS[0].speed;
     JUMP_VELOCITY = DIFFICULTY_LEVELS[0].jumpVelocity;
     obstacleSpacing = DIFFICULTY_LEVELS[0].obstacleSpacing;
-    levelDisplay.innerText = `დონე: ${currentLevel}`;
-    gameOverBox.style.display = 'none'; // Hide game over box
-    congratulatoryMessageBox.classList.add('hidden'); // Hide the congratulatory message
-}
-
-// Main game loop
-function gameLoop() {
-    updateGame();
-    requestAnimationFrame(gameLoop); // Request the next frame
-}
-
-// Start the game loop if not on mobile
-if (!isMobile()) {
-    gameLoop(); // Start the game loop
+    dinoBottom = 0;
+    dinoVelocity = 0;
+    gameOver = false;
+    scoreDisplay.innerHTML = `Okin's: 0 <img class="head-ring-score" src="img/ring.png" alt="ringscore">`;
+    levelDisplay.innerText = `Level: 0`;
+    obstacle.style.transform = 'translateX(0)';
+    dino.style.bottom = '0px';
+    gameLoop();
 }
