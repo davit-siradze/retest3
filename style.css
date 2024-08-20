@@ -1,6 +1,13 @@
 :root {
     --vh: 100vh;
 }
+/* Adjust --vh value for Safari */
+@supports (-webkit-touch-callout: none) {
+    :root {
+        --vh: calc(100vh - env(safe-area-inset-top));
+    }
+}
+
 /* Base styles */
 html, body {
     margin: 0;
